@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Assets\Shaders\HLSL\**" />
+    <EmbeddedResource Remove="Assets\Shaders\HLSL\**" />
+    <None Remove="Assets\Shaders\HLSL\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Fonts\FAS.ttf" />
+    <None Remove="Assets\Fonts\SourceSansPro-Bold.ttf" />
+    <None Remove="Assets\Fonts\SourceSansPro-BoldItalic.ttf" />
+    <None Remove="Assets\Fonts\SourceSansPro-Italic.ttf" />
+    <None Remove="Assets\Fonts\SourceSansPro-Regular.ttf" />
+    <None Remove="Assets\Fonts\UbuntuMono-Regular.ttf" />
+    <None Remove="Assets\Shaders\Imgui\imgui-frag.hlsl" />
+    <None Remove="Assets\Shaders\Imgui\imgui-frag.hlsl.bytes" />
+    <None Remove="Assets\Shaders\Imgui\imgui-frag.spirv" />
+    <None Remove="Assets\Shaders\Imgui\imgui-frag.spriv" />
+    <None Remove="Assets\Shaders\Imgui\imgui-frag.spv" />
+    <None Remove="Assets\Shaders\Imgui\imgui-vert.hlsl.bytes" />
+    <None Remove="Assets\Shaders\Imgui\imgui-vert.spirv" />
+    <None Remove="Assets\Shaders\Imgui\imgui-vertex.hlsl" />
+    <None Remove="Assets\Shaders\Imgui\imgui-vertex.hlsl.bytes" />
+    <None Remove="Assets\Shaders\Imgui\imgui-vertex.spirv" />
+    <None Remove="Assets\Shaders\Imgui\imgui-vertex.spriv" />
+    <None Remove="Assets\Shaders\Imgui\imgui-vertex.spv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Shaders\Imgui\imgui-frag.spirv" />
+    <EmbeddedResource Include="Assets\Shaders\Imgui\imgui-vert.spirv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ImGui.NET" Version="1.90.5.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+    <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Veldrid" Version="4.9.0" />
+    <PackageReference Include="Veldrid.SDL2" Version="4.9.0" />
+    <PackageReference Include="Veldrid.SPIRV" Version="1.0.15" />
+    <PackageReference Include="Veldrid.StartupUtilities" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Fonts\FAS.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\SourceSansPro-Bold.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\SourceSansPro-BoldItalic.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\SourceSansPro-Italic.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\SourceSansPro-Regular.ttf" />
+    <EmbeddedResource Include="Assets\Fonts\UbuntuMono-Regular.ttf" />
+  </ItemGroup>
+
+</Project>

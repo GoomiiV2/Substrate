@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Substrate.3D</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Shaders\3D\DebugShapes\DebugShapesFrag.spirv" />
+    <None Remove="Assets\Shaders\3D\DebugShapes\DebugShapesGeo.spirv" />
+    <None Remove="Assets\Shaders\3D\DebugShapes\DebugShapesVert.spirv" />
+    <None Remove="Assets\Shaders\3D\Fullscreen\OutlineFrag.spirv" />
+    <None Remove="Assets\Shaders\3D\Fullscreen\OutlineVert.spirv" />
+    <None Remove="Assets\Shaders\3D\Grid\GridFrag.spirv" />
+    <None Remove="Assets\Shaders\3D\Grid\GridVert.spirv" />
+    <None Remove="Assets\Shaders\3D\Mesh\MeshFrag.spirv" />
+    <None Remove="Assets\Shaders\3D\Mesh\MeshSolidFrag.spirv" />
+    <None Remove="Assets\Shaders\3D\Mesh\MeshVert.spirv" />
+    <None Remove="Assets\Textures\MissingTex.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="Assets\Textures\MissingTex.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Shaders\3D\Mesh\MeshSolidFrag.spirv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Shaders\3D\DebugShapes\DebugShapesFrag.spirv" />
+    <EmbeddedResource Include="Assets\Shaders\3D\DebugShapes\DebugShapesGeo.spirv" />
+    <EmbeddedResource Include="Assets\Shaders\3D\DebugShapes\DebugShapesVert.spirv" />
+    <EmbeddedResource Include="Assets\Shaders\3D\Fullscreen\OutlineFrag.spirv" />
+    <EmbeddedResource Include="Assets\Shaders\3D\Fullscreen\OutlineVert.spirv" />
+    <EmbeddedResource Include="Assets\Shaders\3D\Grid\GridFrag.spirv" />
+    <EmbeddedResource Include="Assets\Shaders\3D\Grid\GridVert.spirv" />
+    <EmbeddedResource Include="Assets\Shaders\3D\Mesh\MeshFrag.spirv" />
+    <EmbeddedResource Include="Assets\Shaders\3D\Mesh\MeshVert.spirv" />
+    <EmbeddedResource Include="Assets\Textures\MissingTex.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Veldrid.ImageSharp" Version="4.9.0" />
+    <PackageReference Include="Veldrid.Utilities" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Substrate\Substrate.csproj" />
+  </ItemGroup>
+
+</Project>

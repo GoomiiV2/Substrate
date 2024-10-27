@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Substrate": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}
