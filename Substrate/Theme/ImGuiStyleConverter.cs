@@ -28,11 +28,11 @@ namespace Substrate
             {
                 foreach (var colorProp in colorsProp)
                 {
-                    foreach (JProperty color in colorProp)
-                    {
-                        var id = Enum.Parse<ImGuiCol>(color.Name);
+                    foreach (JProperty color in colorProp) {
+                        if (!Enum.TryParse<ImGuiCol>(color.Name, out var id)) continue;
+                        
                         var vec4Color = Utils.Vector4FromHex(color.Value.ToString());
-                        jsonObj.Add($"{ColorsPrefix}{(int)id}", JObject.FromObject(vec4Color));
+                        jsonObj.Add($"{ColorsPrefix}{(int) id}", JObject.FromObject(vec4Color));
                     }
                 }
             }

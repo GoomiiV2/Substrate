@@ -168,7 +168,7 @@ namespace Substrate.Widgets
                         var entry = CurrentEntries[entryIdx];
                         ImGui.TableNextColumn();
                         if (ImGui.Selectable($"##SelectEntry_{entry.Name}_{entryIdx}", entry.IsSelected,
-                            ImGuiSelectableFlags.SpanAllColumns | ImGuiSelectableFlags.AllowDoubleClick | ImGuiSelectableFlags.DontClosePopups))
+                            ImGuiSelectableFlags.SpanAllColumns | ImGuiSelectableFlags.AllowDoubleClick | ImGuiSelectableFlags.NoAutoClosePopups))
                         {
                             if (HandleSelection(entry)) return;
                         }
