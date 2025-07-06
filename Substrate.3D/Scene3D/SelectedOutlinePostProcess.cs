@@ -73,7 +73,7 @@ namespace Substrate.Scene3D
             };
             
             Pipeline = Substrate.App.GD.ResourceFactory.CreateGraphicsPipeline(new GraphicsPipelineDescription(
-                blend,
+                BlendStateDescription.SingleAlphaBlend,
                 new DepthStencilStateDescription(false, false, ComparisonKind.Never),
                 RasterizerStateDescription.CullNone,
                 PrimitiveTopology.TriangleList,
@@ -177,7 +177,7 @@ namespace Substrate.Scene3D
             public OutlineData()
             {
                 Color = new Vector4(0.8f, 0.2f, 0.2f, 1f);
-                Thickness = 10;
+                Thickness = 2;
             }
         }
     }

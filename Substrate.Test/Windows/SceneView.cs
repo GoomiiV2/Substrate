@@ -24,7 +24,7 @@ namespace Substrate.Test
             MeshTestActor = Scene.WorldScene.CreateActor<MeshActor>();
             MeshTestActor.Mesh.SetModel(SimpleModel.CreateFromCube());
 
-            /*
+            
             MeshModelTestActor = Scene.WorldScene.CreateActor<MeshActor>();
             MeshModelTestActor.Mesh.SetModel(SimpleModel.CreateFromObj("D:\\TestModels\\Neon\\neon.obj"));
             MeshModelTestActor.Transform.Position = new System.Numerics.Vector3(2, 0, 0);
@@ -33,7 +33,6 @@ namespace Substrate.Test
             MeshModelTestActor2.Mesh.SetModel(SimpleModel.CreateFromObj("D:\\TestModels\\Evelynn\\Evelynn.obj"));
             MeshModelTestActor2.Transform.Position = new System.Numerics.Vector3(5, 0, 0);
             MeshModelTestActor2.Transform.Scale = new System.Numerics.Vector3(0.01f);
-            */
         }
 
         public override void Draw(float dt)

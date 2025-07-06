@@ -111,6 +111,9 @@ namespace Substrate.Scene3D
 
         public override void Render(CommandList cmdList)
         {
+            return;
+            ;
+            
             cmdList.SetPipeline(Pipeline);
             cmdList.SetGraphicsResourceSet(0, World.ProjViewSet);
 

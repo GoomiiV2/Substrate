@@ -65,6 +65,6 @@ void main() {
 
     if (Flags == 1 || SectionOutline)
     {
-        selectedMask = 2;
+        selectedMask = 0xFF;
     }
 }

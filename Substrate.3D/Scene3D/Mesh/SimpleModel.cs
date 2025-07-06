@@ -49,9 +49,9 @@ namespace Substrate.Scene3D
             {
                 AttachmentStates = new[]
                 {
-                    BlendAttachmentDescription.AlphaBlend, // color
-                    BlendAttachmentDescription.Disabled,   // id
-                    BlendAttachmentDescription.Disabled    // Selected mask
+                    BlendAttachmentDescription.AlphaBlend,    // color
+                    BlendAttachmentDescription.OverrideBlend, // id
+                    BlendAttachmentDescription.OverrideBlend  // Selected mask
                 }
             };
 
@@ -62,8 +62,8 @@ namespace Substrate.Scene3D
 
             var pipelineDesc = new GraphicsPipelineDescription(
                 blendState,
-                depthStencil,
-                new RasterizerStateDescription(FaceCullMode.Front, PolygonFillMode.Solid, FrontFace.CounterClockwise, true, false),
+                depthStencil, 
+                new RasterizerStateDescription(FaceCullMode.Front, PolygonFillMode.Solid, FrontFace.CounterClockwise, false, false),
                 PrimitiveTopology.TriangleList,
                 ShaderSet,
                 new[] { Substrate3D.GetProjViewLayout(), PerItemResourceLayout, PerSectionResLayout },
@@ -96,9 +96,9 @@ namespace Substrate.Scene3D
             {
                 AttachmentStates = new[]
                 {
-                    BlendAttachmentDescription.AlphaBlend, // color
-                    BlendAttachmentDescription.Disabled,   // id
-                    BlendAttachmentDescription.Disabled    // Selected mask
+                    BlendAttachmentDescription.AlphaBlend,      // color
+                    BlendAttachmentDescription.OverrideBlend, // id
+                    BlendAttachmentDescription.OverrideBlend  // Selected mask
                 }
             };
 

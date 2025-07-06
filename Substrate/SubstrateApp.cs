@@ -81,9 +81,10 @@ namespace Substrate
 
         private GraphicsBackend GetGraphicsBackendAPI()
         {
-            var configGfxApi = Substrate.Config.Rendering.GfxAPI;
+            /*var configGfxApi = Substrate.Config.Rendering.GfxAPI;
             if (GraphicsDevice.IsBackendSupported(configGfxApi))
                 return configGfxApi;
+                */
 
             if (OperatingSystem.IsWindows())
                 return GraphicsBackend.Direct3D11;

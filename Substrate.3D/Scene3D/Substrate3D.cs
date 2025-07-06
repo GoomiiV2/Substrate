@@ -21,12 +21,12 @@ namespace Substrate.Scene3D
         {
             MainFrameBufferOutputDescription = MainFrameBufferOutputDescription ?? new OutputDescription()
             {
-                DepthAttachment = new OutputAttachmentDescription(PixelFormat.D24_UNorm_S8_UInt),
+                DepthAttachment = new OutputAttachmentDescription(PixelFormat.R32_Float),
                 ColorAttachments = new OutputAttachmentDescription[]
                 {
                     new OutputAttachmentDescription(PixelFormat.R16_G16_B16_A16_UNorm),
                     new OutputAttachmentDescription(PixelFormat.R32_UInt),
-                    new OutputAttachmentDescription(PixelFormat.R16_G16_B16_A16_UNorm)
+                    new OutputAttachmentDescription(PixelFormat.R8_UInt)
                 }
             };
 
