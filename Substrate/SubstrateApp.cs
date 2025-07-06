@@ -32,12 +32,18 @@ namespace Substrate
         public void Init(string[] args)
         {
             Substrate.Log.Info(LogCat.Substrate, "Starting {appName} App", Substrate.Config.AppName);
-
+            
             var gfxBackend = GetGraphicsBackendAPI();
-            VeldridStartup.CreateWindowAndGraphicsDevice(
+            /*VeldridStartup.CreateWindowAndGraphicsDevice(
                 new WindowCreateInfo(Sdl2Native.SDL_WINDOWPOS_CENTERED, Sdl2Native.SDL_WINDOWPOS_CENTERED, 1280, 720, WindowState.Normal, Title),
                 new GraphicsDeviceOptions(Substrate.Config.Rendering.DebugRenderingDevice, null, true, ResourceBindingModel.Improved, true, true),
                 gfxBackend,
+                out var window, out var gd);*/
+            
+            VeldridStartup.CreateWindowAndGraphicsDevice(
+                new WindowCreateInfo(Sdl2Native.SDL_WINDOWPOS_CENTERED, Sdl2Native.SDL_WINDOWPOS_CENTERED, 1280, 720, WindowState.Normal, Title),
+                new GraphicsDeviceOptions(false, null, true, ResourceBindingModel.Improved, true, true),
+                GraphicsBackend.Vulkan,
                 out var window, out var gd);
 
             Window = window;

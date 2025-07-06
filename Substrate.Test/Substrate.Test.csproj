@@ -9,6 +9,10 @@
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Substrate.3D\Substrate.3D.csproj" />
     <ProjectReference Include="..\Substrate\Substrate.csproj" />

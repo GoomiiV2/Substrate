@@ -58,9 +58,19 @@ namespace Substrate.Scene3D
             var world = Matrix4x4.CreateTranslation(Vector3.Zero);
             gd.UpdateBuffer(WorldBuffer, 0, ref world);
 
+            var blend = new BlendStateDescription()
+            {
+                AttachmentStates =
+                [
+                    BlendAttachmentDescription.AlphaBlend,
+                    BlendAttachmentDescription.Disabled,
+                    BlendAttachmentDescription.Disabled
+                ]
+            };
+            
             Pipeline = gd.ResourceFactory.CreateGraphicsPipeline(new GraphicsPipelineDescription(
-                BlendStateDescription.SingleAlphaBlend,
-                new DepthStencilStateDescription(true, true, ComparisonKind.LessEqual),
+                blend,
+                new DepthStencilStateDescription(true, false, ComparisonKind.LessEqual),
                 RasterizerStateDescription.CullNone,
                 PrimitiveTopology.TriangleList,
                 ShaderSet,

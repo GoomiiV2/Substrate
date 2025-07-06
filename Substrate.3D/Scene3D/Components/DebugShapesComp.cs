@@ -42,8 +42,18 @@ namespace Substrate.Scene3D.Components
             WorldBuffer = rf.CreateBuffer(new BufferDescription(64, BufferUsage.UniformBuffer));
             ItemResourceSet = rf.CreateResourceSet(new ResourceSetDescription(PerItemResourceLayout, WorldBuffer));
 
+            var blend = new BlendStateDescription()
+            {
+                AttachmentStates =
+                [
+                    BlendAttachmentDescription.AlphaBlend,
+                    BlendAttachmentDescription.Disabled,
+                    BlendAttachmentDescription.Disabled
+                ]
+            };
+            
             Pipeline = rf.CreateGraphicsPipeline(new GraphicsPipelineDescription(
-                BlendStateDescription.SingleOverrideBlend,
+                blend,
                 DepthStencilStateDescription.DepthOnlyLessEqual,
                 new RasterizerStateDescription(FaceCullMode.None, PolygonFillMode.Solid, FrontFace.Clockwise, true, true),
                 PrimitiveTopology.LineList,

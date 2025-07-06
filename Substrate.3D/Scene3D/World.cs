@@ -56,8 +56,9 @@ namespace Substrate.Scene3D
         // Call after a scene widget widget has been created
         public virtual void Init(Scene3dWidget sceneWidget)
         {
-            Grid = CreateActor<GridActor>();
-            DebugShapes = CreateActor<DebugShapesActor>();
+            Grid                  = CreateActor<GridActor>();
+            Grid.RenderOrderBoost = -10000;
+            DebugShapes           = CreateActor<DebugShapesActor>();
 
             SelectionDisplayCube = DebugShapes.AddCube(new Vector3(0, 0, 0), new Vector3(0, 0, 0));
         }

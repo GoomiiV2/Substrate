@@ -49,8 +49,8 @@ namespace Substrate.Scene3D
             {
                 AttachmentStates = new[]
                 {
-                    BlendAttachmentDescription.AlphaBlend,      // color
-                    BlendAttachmentDescription.OverrideBlend,   // id
+                    BlendAttachmentDescription.AlphaBlend, // color
+                    BlendAttachmentDescription.Disabled,   // id
                     BlendAttachmentDescription.Disabled    // Selected mask
                 }
             };
@@ -96,9 +96,9 @@ namespace Substrate.Scene3D
             {
                 AttachmentStates = new[]
                 {
-                    BlendAttachmentDescription.AlphaBlend,      // color
-                    BlendAttachmentDescription.OverrideBlend,   // id
-                    BlendAttachmentDescription.OverrideBlend    // Selected mask
+                    BlendAttachmentDescription.AlphaBlend, // color
+                    BlendAttachmentDescription.Disabled,   // id
+                    BlendAttachmentDescription.Disabled    // Selected mask
                 }
             };
 

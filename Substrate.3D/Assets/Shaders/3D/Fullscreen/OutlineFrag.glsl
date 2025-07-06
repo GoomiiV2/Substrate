@@ -72,7 +72,7 @@ void main() {
 		}
 	}
 
-	if (texCol.r == 255)
+	if (texCol.r == 2)
 	{
 		discard;
 	}
