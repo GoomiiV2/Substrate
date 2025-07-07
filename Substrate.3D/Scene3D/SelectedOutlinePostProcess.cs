@@ -177,7 +177,7 @@ namespace Substrate.Scene3D
             public OutlineData()
             {
                 Color = new Vector4(0.8f, 0.2f, 0.2f, 1f);
-                Thickness = 2;
+                Thickness = 5;
             }
         }
     }

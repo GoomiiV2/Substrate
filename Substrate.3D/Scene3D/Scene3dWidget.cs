@@ -286,8 +286,8 @@ namespace Substrate.Widgets
 
         private void DrawDebugOverlay()
         {
-            var depthTex = Substrate.App.Controller.GetOrCreateImGuiBinding(Substrate.App.GD.ResourceFactory, FrameBufferResource.DepthTex);
-            ImGui.Image(depthTex, new Vector2(256, 256));
+            //var depthTex = Substrate.App.Controller.GetOrCreateImGuiBinding(Substrate.App.GD.ResourceFactory, FrameBufferResource.DepthTex);
+            //ImGui.Image(depthTex, new Vector2(256, 256));
         }
     }
 }

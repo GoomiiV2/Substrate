@@ -37,12 +37,14 @@ namespace Substrate.Test
 
         public override void Draw(float dt)
         {
+            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, 0);
             if (ImGui.Begin("Scene View"))
             {
                 var size = ImGui.GetContentRegionAvail();
                 Scene.Draw(size);
             }
             ImGui.End();
+            ImGui.PopStyleVar();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Substrate
 
         public SelectableID GetScreenSelectedId(Vector2? pos = null)
         {
-            pos = pos ?? ImGui.GetMousePos() - ImGui.GetWindowPos();
+            pos = pos ?? ImGui.GetMousePos() - ImGui.GetCursorScreenPos();
             uint posX = (uint)pos.Value.X;
             uint posY = (uint)pos.Value.Y;
             uint width = 1;
@@ -55,7 +55,7 @@ namespace Substrate
 
                 var cmdList = Substrate.App.GD.ResourceFactory.CreateCommandList();
                 cmdList.Begin();
-                cmdList.CopyTexture(ActorIdTex, posX, posY, 0, 0, 0, stagingTex, 0, 0, 0, 0, 0, width, height, 1, 1);
+                cmdList.CopyTexture(ActorIdTex, posX + 2, posY + 2, 0, 0, 0, stagingTex, 0, 0, 0, 0, 0, width, height, 1, 1);
                 cmdList.End();
                 Substrate.App.GD.SubmitCommands(cmdList);
                 Substrate.App.GD.WaitForIdle();
