@@ -57,7 +57,7 @@ namespace Substrate.Scene3D
         public virtual void Init(Scene3dWidget sceneWidget)
         {
             Grid                  = CreateActor<GridActor>();
-            Grid.RenderOrderBoost = -10000;
+            Grid.RenderOrderBoost = 10000;
             DebugShapes           = CreateActor<DebugShapesActor>();
 
             SelectionDisplayCube = DebugShapes.AddCube(new Vector3(0, 0, 0), new Vector3(0, 0, 0));

@@ -70,7 +70,7 @@ namespace Substrate.Scene3D
             
             Pipeline = gd.ResourceFactory.CreateGraphicsPipeline(new GraphicsPipelineDescription(
                 blend,
-                new DepthStencilStateDescription(true, false, ComparisonKind.LessEqual),
+                new DepthStencilStateDescription(true, true, ComparisonKind.LessEqual),
                 RasterizerStateDescription.CullNone,
                 PrimitiveTopology.TriangleList,
                 ShaderSet,
@@ -111,9 +111,6 @@ namespace Substrate.Scene3D
 
         public override void Render(CommandList cmdList)
         {
-            return;
-            ;
-            
             cmdList.SetPipeline(Pipeline);
             cmdList.SetGraphicsResourceSet(0, World.ProjViewSet);
 
