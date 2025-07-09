@@ -6,7 +6,7 @@ namespace Substrate
 {
     public class FontFile
     {
-        private byte[] data;
+        public byte[] data;
         private GCHandle handle;
 
         public string Path { get; }
@@ -77,15 +77,15 @@ namespace Substrate
             }
         }
 
-        internal ushort[] GetGlyphRanges()
+        internal uint[] GetGlyphRanges()
         {
             if (Ranges == null || Ranges.Length == 0)
             {
-                return null;
+                return new uint[0];
             }
 
-            int i = 0;
-            ushort[] ret = new ushort[(Ranges.Length * 2) + 1];
+            int    i   = 0;
+            uint[] ret = new uint[(Ranges.Length * 2) + 1];
             foreach (GlyphRange range in Ranges)
             {
                 ret[i] = range.Min;

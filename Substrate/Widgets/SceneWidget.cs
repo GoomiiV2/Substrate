@@ -1,4 +1,4 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using Substrate;
 using System.Numerics;
 using Veldrid;
@@ -31,7 +31,7 @@ namespace Substrate.Widgets
 
         public void DrawWindow(string title)
         {
-            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, 0);
+            //ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, 0);
             if (ImGui.Begin(title))
             {
                 var size = ImGui.GetContentRegionAvail();
@@ -42,7 +42,7 @@ namespace Substrate.Widgets
 
                 ImGui.End();
             }
-            ImGui.PopStyleVar(1);
+            //ImGui.PopStyleVar(1);
         }
 
         public virtual void Draw(Vector2 size)
@@ -70,7 +70,7 @@ namespace Substrate.Widgets
 
             ImGui.SetCursorPos(ImGui.GetCursorPos() + new Vector2(-2, -2));
             var cursorPos = ImGui.GetCursorPos();
-            ImGui.Image(SceneTexBinding, size);
+            ImGui.Image(new ImTextureID(SceneTexBinding), size);
 
             ImGui.SetCursorPos(cursorPos);
 

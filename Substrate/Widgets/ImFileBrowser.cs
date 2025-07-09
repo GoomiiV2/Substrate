@@ -1,4 +1,4 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using System.Numerics;
 
 namespace Substrate.Widgets
@@ -461,7 +461,7 @@ namespace Substrate.Widgets
 
         private static void DrawSidePanel(float Height)
         {
-            if (ImGui.BeginChild("##FileBrowserSidePanel", new Vector2(130, Height), ImGuiChildFlags.Border))
+            if (ImGui.BeginChild("##FileBrowserSidePanel", new Vector2(130, Height), ImGuiChildFlags.Borders))
             {
                 if (ImGui.BeginTable("##SidePanelItems", 1, ImGuiTableFlags.ScrollY))
                 {

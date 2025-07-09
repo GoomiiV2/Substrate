@@ -1,4 +1,4 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,9 +56,11 @@ namespace Substrate
 
         public static Vector4 DarkenOrLightenColor(Vector4 color, float amount)
         {
-            ImGui.ColorConvertRGBtoHSV(color.X, color.Y, color.Z, out float h, out float s, out float v);
+            float h = 0, s = 0, v = 0;
+            float r = 0, g = 0, b = 0;
+            ImGui.ColorConvertRGBtoHSV(color.X, color.Y, color.Z, ref h, ref s, ref v);
             v += amount;
-            ImGui.ColorConvertHSVtoRGB(h, s, v, out float r, out float g, out float b);
+            ImGui.ColorConvertHSVtoRGB(h, s, v, ref r, ref g, ref b);
             var newColor = new Vector4(r, g, b, 1.0f);
 
             return newColor;

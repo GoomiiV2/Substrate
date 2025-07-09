@@ -1,4 +1,4 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using Veldrid;
 
 namespace Substrate.Scene3D.Components

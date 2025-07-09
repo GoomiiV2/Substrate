@@ -1,4 +1,4 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using System.Numerics;
 
 namespace Substrate
@@ -66,7 +66,7 @@ namespace Substrate
         public static bool Vector4(ref Vector4 vec, string name)
         {
             var wasChanged = false;
-            ImGuiNET.ImGui.PushID(name);
+            ImGui.PushID(name);
 
             wasChanged |= FloatLabel(ref vec.X, "X", X_AXIS_COLOR);
             ImGui.SameLine();
@@ -84,7 +84,7 @@ namespace Substrate
         public static bool Quaternion(ref Quaternion quat, string name)
         {
             var wasChanged = false;
-            ImGuiNET.ImGui.PushID(name);
+            ImGui.PushID(name);
 
             wasChanged |= FloatLabel(ref quat.X, "X", X_AXIS_COLOR);
             ImGui.SameLine();
@@ -102,7 +102,7 @@ namespace Substrate
         public static bool Matrix3x2(ref Matrix3x2 mat, string name)
         {
             var wasChanged = false;
-            ImGuiNET.ImGui.PushID(name);
+            ImGui.PushID(name);
 
             wasChanged |= FloatLabel(ref mat.M11, "M11", X_AXIS_COLOR);
             ImGui.SameLine();
@@ -124,7 +124,7 @@ namespace Substrate
         public static bool Matrix4x4(ref Matrix4x4 mat, string name)
         {
             var wasChanged = false;
-            ImGuiNET.ImGui.PushID(name);
+            ImGui.PushID(name);
 
             wasChanged |= FloatLabel(ref mat.M11, "M11", X_AXIS_COLOR);
             ImGui.SameLine();

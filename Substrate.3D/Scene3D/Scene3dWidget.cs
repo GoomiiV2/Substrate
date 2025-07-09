@@ -1,7 +1,8 @@
 ﻿
-using ImGuiNET;
+using Hexa.NET.ImGui;
 //using ImGuizmoNET;
 using System.Numerics;
+using Hexa.NET.ImGuizmo;
 using Veldrid;
 using Vulkan.Xlib;
 using Substrate.Scene3D;
@@ -19,8 +20,8 @@ namespace Substrate.Widgets
         protected float MouseSenstivity = 5f;
 
         public string[] SnapLevels = new string[] { "0.1", "0.2", "0.5", "1", "2", "5", "10" };
-        //protected OPERATION TransformOperation = OPERATION.TRANSLATE;
-        //protected MODE TransformMode = MODE.WORLD;
+        protected ImGuizmoOperation TransformOperation = ImGuizmoOperation.Translate;
+        protected ImGuizmoMode TransformMode = ImGuizmoMode.World;
         protected float[] TransformSnap = null;
         protected int TransformSelectedSnapIdx = 3;
 
@@ -43,7 +44,7 @@ namespace Substrate.Widgets
             OutlinePostProc = new();
             OutlinePostProc.Init();
 
-            //ImGuizmo.Enable(true);
+            ImGuizmo.Enable(true);
         }
 
         // Crate a scene for an exteranly managed world, eg a camera view into one
@@ -120,7 +121,8 @@ namespace Substrate.Widgets
 
         public override void Render(double dt)
         {
-            //ImGuizmo.SetDrawlist();
+            ImDrawListPtr drawList = ImGui.GetWindowDrawList();
+            ImGuizmo.SetDrawlist();
 
             base.Render(dt);
             CommandList.ClearColorTarget(1, new RgbaFloat(-float.MaxValue, -float.NaN, -float.NaN, -float.NaN));
@@ -135,8 +137,8 @@ namespace Substrate.Widgets
                 WorldScene.Update(dt);
 
             var pos = ImGui.GetWindowPos();
-            //ImGuizmo.SetRect(pos.X + 4, pos.Y + 30, FrameBufferResource.SceneTex.Width, FrameBufferResource.SceneTex.Height);
-            //ImGuizmo.Enable(true);
+            ImGuizmo.SetRect(pos.X + 4, pos.Y + 30, FrameBufferResource.SceneTex.Width, FrameBufferResource.SceneTex.Height);
+            ImGuizmo.Enable(true);
             RenderStats = WorldScene.Render(dt, CommandList, Camera);
 
             OutlinePostProc?.Render(CommandList, FrameBufferResource);
@@ -165,7 +167,7 @@ namespace Substrate.Widgets
         {
             if (WorldScene != null)
             {
-                //WorldScene.DrawTransform(TransformOperation, TransformMode, ref TransformSnap);
+                WorldScene.DrawTransform(TransformOperation, TransformMode, ref TransformSnap);
             }
         }
 

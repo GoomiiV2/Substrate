@@ -1,6 +1,7 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using System.Numerics;
 using System.Reflection;
+using Hexa.NET.ImGui.Utilities;
 
 namespace Substrate
 {
@@ -21,12 +22,12 @@ namespace Substrate
         {
             Fonts = new Dictionary<string, Font>();
             ResourceAssemblies = new List<Assembly>();
-
+            
             AddFont(new Font("Regular", 18, new FontFile("Assets.Fonts.SourceSansPro-Regular.ttf", new Vector2(0, -1))));
             AddFont(new Font("Bold", 18, new FontFile("Assets.Fonts.SourceSansPro-Bold.ttf", new Vector2(0, -1))));
             AddFont(new Font("Italic", 18, new FontFile("Assets.Fonts.SourceSansPro-Italic.ttf", new Vector2(0, -1))));
             AddFont(new Font("BoldItalic", 18, new FontFile("Assets.Fonts.SourceSansPro-BoldItalic.ttf", new Vector2(0, -1))));
-            AddFont(new Font("ProggyClean", 13, new FontFile("ImGui.Default")));
+            //AddFont(new Font("ProggyClean", 13, new FontFile("ImGui.Default")));
             AddFont(new Font("FAS", [13, 18], new FontFile("Assets.Fonts.FAS.ttf", new GlyphRange(0x0021, 0xF8FF)))); //new GlyphRange(0xE000, 0xF8FF))));
             AddFont(new Font("UbuntuMono-Regular", 13, new FontFile("Assets.Fonts.UbuntuMono-Regular.ttf")));
 

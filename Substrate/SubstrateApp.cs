@@ -3,10 +3,11 @@ using Veldrid;
 using Veldrid.StartupUtilities;
 using System.Diagnostics;
 using System.Numerics;
-using ImGuiNET;
+using Hexa.NET.ImGui;
 using Serilog.Core;
 using Substrate.Logging;
 using System.Reflection.Metadata.Ecma335;
+using Hexa.NET.ImGuizmo;
 using Vortice.DXGI;
 using Vulkan;
 
@@ -108,6 +109,7 @@ namespace Substrate
             else
                 Substrate.Fonts.PushFont(FontManager.ProggyClean);
 
+            ImGuizmo.BeginFrame();
             Draw(dt);
             DrawWindows(dt);
             DrawModals(dt);

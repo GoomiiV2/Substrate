@@ -1,4 +1,4 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using Newtonsoft.Json;
 using Serilog.Core;
 using Substrate.Logging;
@@ -78,7 +78,7 @@ namespace Substrate
         {
             Name = "Imgui Dark";
             IsBuiltIn = true;
-            ImGuiStyle* stylePtr = ImGui.GetStyle().NativePtr;
+            ImGuiStyle* stylePtr = ImGui.GetStyle().Handle;
             ImGui.StyleColorsDark(stylePtr);
             Imgui = (ImGuiStyle)Marshal.PtrToStructure((IntPtr)stylePtr, typeof(ImGuiStyle));
 
@@ -95,7 +95,7 @@ namespace Substrate
         {
             Name = "Imgui Light";
             IsBuiltIn = true;
-            ImGuiStyle* stylePtr = ImGui.GetStyle().NativePtr;
+            ImGuiStyle* stylePtr = ImGui.GetStyle().Handle;
             ImGui.StyleColorsLight(stylePtr);
             Imgui = (ImGuiStyle)Marshal.PtrToStructure((IntPtr)stylePtr, typeof(ImGuiStyle));
 

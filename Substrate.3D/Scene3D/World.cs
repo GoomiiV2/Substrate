@@ -1,9 +1,10 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using Substrate.Scene3D.Components;
 //using ImGuizmoNET;
 using Substrate.Widgets;
 using System.Collections.Concurrent;
 using System.Numerics;
+using Hexa.NET.ImGuizmo;
 using Veldrid;
 using Veldrid.Utilities;
 
@@ -192,9 +193,8 @@ namespace Substrate.Scene3D
             stats.NumRenderedActors = RenderList.Count;
             return stats;
         }
-
-        /*
-        public unsafe void DrawTransform(OPERATION op, MODE mode, ref float[] snap)
+        
+        public unsafe void DrawTransform(ImGuizmoOperation op, ImGuizmoMode mode, ref float[] snap)
         {
             var view = ActiveCamera.ViewMat.ToFloatArrray();
             var proj = ActiveCamera.ProjectionMat.ToFloatArrray();
@@ -206,6 +206,7 @@ namespace Substrate.Scene3D
                 var transform = SelectedActors[0].Transform.World.ToFloatArrray();
                 var deltaMat = new float[16];
                 float* snaps = null;
+                ImGui.PushID("ImGuizmo");
                 if (ImGuizmo.Manipulate(ref view[0], ref proj[0], op, mode, ref transform[0], ref deltaMat[0], ref snap != null ? ref snap[0] : ref snaps[0]))
                 {
                     if (ImGui.IsWindowFocused())
@@ -214,12 +215,12 @@ namespace Substrate.Scene3D
                         SelectedActors[0].Transform.OnChange();
                     }
                 }
+                ImGui.PopID();
 
                 //SelectionDisplayCube.FromBoundingBox(SelectedActors[0].BoundingBox);
                 //DebugShapes.Recreate();
             }
         }
-        */
 
         private void BuildRenderList(CameraActor camera)
         {

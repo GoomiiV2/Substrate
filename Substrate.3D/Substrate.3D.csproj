@@ -44,6 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hexa.NET.ImGuizmo" Version="2.2.7" />
     <PackageReference Include="Veldrid.ImageSharp" Version="4.9.0" />
     <PackageReference Include="Veldrid.Utilities" Version="4.9.0" />
   </ItemGroup>

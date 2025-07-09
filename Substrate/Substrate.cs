@@ -1,10 +1,11 @@
 ﻿
-using ImGuiNET;
+using Hexa.NET.ImGui;
 using Newtonsoft.Json;
 using Substrate.Logging;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Hexa.NET.ImGuizmo;
 
 namespace Substrate
 {
@@ -26,7 +27,9 @@ namespace Substrate
             where AppType : SubstrateApp, new()
             where ConfigType : SubstrateConfig, new()
         {
-            ImGui.CreateContext();
+            var context = ImGui.CreateContext();
+            ImGui.SetCurrentContext(context);
+            ImGuizmo.SetImGuiContext(context);
 
             Fonts  = new FontManager();
             Config = new ConfigType(); // default first
@@ -89,7 +92,7 @@ namespace Substrate
         {
             Theme = theme;
 
-            ImGuiStyle* stylePtr = ImGui.GetStyle().NativePtr;
+            ImGuiStyle* stylePtr = ImGui.GetStyle().Handle;
             Marshal.StructureToPtr(Theme.Imgui, (IntPtr)stylePtr, true);
         }
 

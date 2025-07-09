@@ -1,4 +1,4 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using Substrate.Scene3D;
 using Substrate.Widgets;
 using System;
@@ -37,14 +37,14 @@ namespace Substrate.Test
 
         public override void Draw(float dt)
         {
-            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, 0);
+            //ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, 0);
             if (ImGui.Begin("Scene View"))
             {
                 var size = ImGui.GetContentRegionAvail();
                 Scene.Draw(size);
             }
             ImGui.End();
-            ImGui.PopStyleVar();
+            //ImGui.PopStyleVar();
         }
     }
 }

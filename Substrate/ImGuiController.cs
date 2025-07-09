@@ -5,11 +5,13 @@ using System.Reflection;
 using System.IO;
 using Veldrid;
 using System.Runtime.CompilerServices;
-using ImGuiNET;
+using Hexa.NET.ImGui;
 using Veldrid.SPIRV;
 using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Runtime.InteropServices;
+using Hexa.NET.ImGui.Utilities;
+using Hexa.NET.ImGuizmo;
 
 namespace Substrate
 {
@@ -72,14 +74,14 @@ namespace Substrate
             _windowWidth = width;
             _windowHeight = height;
 
-            var io = ImGui.GetIO();
+            var io      = ImGui.GetIO();
 
             var imguiIniPath = Path.Combine(Substrate.Config.AppDataPath, "imgui.ini");
             unsafe
             {
                 byte* iniFileName = (byte*)(void*)Marshal.AllocHGlobal(imguiIniPath.Length + 1);
                 GetUtf8(imguiIniPath, iniFileName, imguiIniPath.Length);
-                io.NativePtr->IniFilename = iniFileName;
+                io.Handle->IniFilename = iniFileName;
                 ImGui.LoadIniSettingsFromDisk(imguiIniPath);
             }
 
@@ -233,15 +235,16 @@ namespace Substrate
         /// <summary>
         /// Recreates the device texture used to render text.
         /// </summary>
-        public void RecreateFontDeviceTexture(GraphicsDevice gd)
+        public unsafe void RecreateFontDeviceTexture(GraphicsDevice gd)
         {
-            ImGuiIOPtr io = ImGui.GetIO();
+            var io = ImGui.GetIO();
+            
             // Build
-            IntPtr pixels;
-            int width, height, bytesPerPixel;
-            io.Fonts.GetTexDataAsRGBA32(out pixels, out width, out height, out bytesPerPixel);
+            byte* pixels = null;
+            int width = 0 , height = 0, bytesPerPixel = 0;
+            io.Fonts.GetTexDataAsRGBA32(&pixels, ref width, ref height, ref bytesPerPixel);
             // Store our identifier
-            io.Fonts.SetTexID(_fontAtlasID);
+            io.Fonts.SetTexID(new ImTextureID(_fontAtlasID));
 
             _fontTexture = gd.ResourceFactory.CreateTexture(TextureDescription.Texture2D(
                 (uint)width,
@@ -253,7 +256,7 @@ namespace Substrate
             _fontTexture.Name = "ImGui.NET Font Texture";
             gd.UpdateTexture(
                 _fontTexture,
-                pixels,
+                (nint)pixels,
                 (uint)(bytesPerPixel * width * height),
                 0,
                 0,
@@ -328,7 +331,7 @@ namespace Substrate
                 >= Key.F1 and <= Key.F24 => KeyToImGuiKeyShortcut(key, Key.F1, ImGuiKey.F1),
                 >= Key.Keypad0 and <= Key.Keypad9 => KeyToImGuiKeyShortcut(key, Key.Keypad0, ImGuiKey.Keypad0),
                 >= Key.A and <= Key.Z => KeyToImGuiKeyShortcut(key, Key.A, ImGuiKey.A),
-                >= Key.Number0 and <= Key.Number9 => KeyToImGuiKeyShortcut(key, Key.Number0, ImGuiKey._0),
+                >= Key.Number0 and <= Key.Number9 => KeyToImGuiKeyShortcut(key, Key.Number0, ImGuiKey.Key0),
                 Key.ShiftLeft or Key.ShiftRight => ImGuiKey.ModShift,
                 Key.ControlLeft or Key.ControlRight => ImGuiKey.ModCtrl,
                 Key.AltLeft or Key.AltRight => ImGuiKey.ModAlt,
@@ -402,7 +405,7 @@ namespace Substrate
             }
         }
 
-        private void RenderImDrawData(ImDrawDataPtr draw_data, GraphicsDevice gd, CommandList cl)
+        private unsafe void RenderImDrawData(ImDrawDataPtr draw_data, GraphicsDevice gd, CommandList cl)
         {
             uint vertexOffsetInVertices = 0;
             uint indexOffsetInElements = 0;
@@ -433,13 +436,13 @@ namespace Substrate
                 cl.UpdateBuffer(
                     _vertexBuffer,
                     vertexOffsetInVertices * (uint)Unsafe.SizeOf<ImDrawVert>(),
-                    cmd_list.VtxBuffer.Data,
+                    (nint)cmd_list.VtxBuffer.Front,
                     (uint)(cmd_list.VtxBuffer.Size * Unsafe.SizeOf<ImDrawVert>()));
 
                 cl.UpdateBuffer(
                     _indexBuffer,
                     indexOffsetInElements * sizeof(ushort),
-                    cmd_list.IdxBuffer.Data,
+                    (nint)cmd_list.IdxBuffer.Data,
                     (uint)(cmd_list.IdxBuffer.Size * sizeof(ushort)));
 
                 vertexOffsetInVertices += (uint)cmd_list.VtxBuffer.Size;
@@ -473,8 +476,8 @@ namespace Substrate
                 ImDrawListPtr cmd_list = draw_data.CmdLists[n];
                 for (int cmd_i = 0; cmd_i < cmd_list.CmdBuffer.Size; cmd_i++)
                 {
-                    ImDrawCmdPtr pcmd = cmd_list.CmdBuffer[cmd_i];
-                    if (pcmd.UserCallback != IntPtr.Zero)
+                    ImDrawCmd pcmd = cmd_list.CmdBuffer[cmd_i];
+                    if (pcmd.UserCallback != null)
                     {
                         throw new NotImplementedException();
                     }
@@ -488,7 +491,7 @@ namespace Substrate
                             }
                             else
                             {
-                                cl.SetGraphicsResourceSet(1, GetImageResourceSet(pcmd.TextureId));
+                                cl.SetGraphicsResourceSet(1, GetImageResourceSet((nint)pcmd.TextureId.Handle));
                             }
                         }
 

@@ -1,6 +1,7 @@
-﻿using ImGuiNET;
+﻿using Hexa.NET.ImGui;
 using System.Runtime.InteropServices;
 using System.Text;
+using Hexa.NET.ImGui.Utilities;
 
 namespace Substrate
 {
@@ -120,57 +121,21 @@ namespace Substrate
 
         private unsafe ImFontPtr Create(byte fontSize)
         {
-            ImFontAtlasPtr atlasPtr = ImGui.GetIO().Fonts;
-            ImFontPtr imFontPtr = null;
-
-            bool first = true;
-            foreach (FontFile file in Files)
-            {
-                ImFontConfigPtr configPtr = CreateImFontConfigPtr(fontSize, !first);
-                configPtr.GlyphOffset = file.GlyphOffset;
-
-                byte[] fontNameBytes = new byte[configPtr.Name.Count];
-                int maxFontNameLength = (fontNameBytes.Length - 1) - (4 + DigitCount(fontSize));
-                string fontNameFormat = $"{(Name.Length > maxFontNameLength ? Name.Substring(0, maxFontNameLength) : Name)}, {(int)fontSize}px";
-                Encoding.ASCII.GetBytes(fontNameFormat).CopyTo(fontNameBytes, 0);
-                for (int i = 0; i < fontNameBytes.Length; i++)
-                {
-                    configPtr.Name[i] = fontNameBytes[i];
-                }
-
-                if (file.Path == "ImGui.Default")
-                {
-                    imFontPtr = atlasPtr.AddFontDefault();
-                }
-                else
-                {
-                    ushort[] ranges = file.GetGlyphRanges();
-                    if (ranges == null || ranges.Length == 0)
-                    {
-                        imFontPtr = atlasPtr.AddFontFromMemoryTTF(file.GetPinnedData(), file.GetPinnedDataLength(), configPtr.SizePixels, configPtr);
-                    }
-                    else
-                    {
-                        GCHandle rangeHandle = GCHandle.Alloc(ranges, GCHandleType.Pinned);
-                        imFontPtr = atlasPtr.AddFontFromMemoryTTF(file.GetPinnedData(), file.GetPinnedDataLength(), configPtr.SizePixels, configPtr, rangeHandle.AddrOfPinnedObject());
-                        rangeHandle.Free();
-                    }
-                }
-
-                first = false;
-                ImGuiNative.ImFontConfig_destroy(configPtr);
-            }
-
-            return imFontPtr;
+            ImGuiFontBuilder builder = new();
+            if (Files[0].Ranges != null)
+                builder.AddFontFromMemoryTTF(Files[0].data, fontSize, [Files[0].Ranges[0].Min, Files[0].Ranges[0].Max]);
+            else
+                builder.AddFontFromMemoryTTF(Files[0].data, fontSize, new GlyphRanges());
+                
+            return builder.Build();
         }
         private unsafe ImFontConfigPtr CreateImFontConfigPtr(byte fontSize, bool mergeMode)
         {
-            ImFontConfigPtr configPtr = ImGuiNative.ImFontConfig_ImFontConfig();
+            ImFontConfigPtr configPtr = ImGui.ImFontConfig().Handle;
             configPtr.OversampleH = 1;
             configPtr.OversampleV = 1;
             configPtr.PixelSnapH = true;
             configPtr.RasterizerMultiply = 1f;
-            configPtr.GlyphExtraSpacing = new System.Numerics.Vector2(0, 0);
             configPtr.MergeMode = mergeMode;
             configPtr.SizePixels = fontSize;
             return configPtr;
