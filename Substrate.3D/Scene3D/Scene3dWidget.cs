@@ -25,7 +25,12 @@ namespace Substrate.Widgets
         protected float[] TransformSnap = null;
         protected int TransformSelectedSnapIdx = 3;
 
-        public bool ShowDebugInfo = true;
+        public bool ShowDebugInfo       = true;
+        public bool ShowToolbar         = true;
+        public bool ShowViewCube        = true;
+        public bool ShowFps             = true;
+        public bool AllowActorSelecting = true;
+        
         private RenderStats RenderStats;
 
         public SelectedOutlinePostProcess OutlinePostProc;
@@ -102,7 +107,7 @@ namespace Substrate.Widgets
                     Camera.Transform.RotationEuler = angles;
                 }
 
-                if (ImGui.IsMouseClicked(ImGuiMouseButton.Left))
+                if (ImGui.IsMouseClicked(ImGuiMouseButton.Left) && !ImGui.IsAnyItemHovered() && AllowActorSelecting)
                 {
                     var selectionId = FrameBufferResource.GetScreenSelectedId();
                     WorldScene.SelectItem(selectionId);
@@ -121,7 +126,6 @@ namespace Substrate.Widgets
 
         public override void Render(double dt)
         {
-            ImDrawListPtr drawList = ImGui.GetWindowDrawList();
             ImGuizmo.SetDrawlist();
 
             base.Render(dt);
@@ -142,25 +146,56 @@ namespace Substrate.Widgets
             RenderStats = WorldScene.Render(dt, CommandList, Camera);
 
             OutlinePostProc?.Render(CommandList, FrameBufferResource);
-            //WorldScene.DrawTransform();
         }
 
         public override void DrawOverlays(double dt, Vector2 size)
         {
             base.DrawOverlays(dt, size);
+            
+            var pos = ImGui.GetWindowPos();
+            
+            if (ShowToolbar)
+                DrawToolbar();
+            
+            if (ShowFps)
+                DrawFps(new Vector2(size.X - (150), 70));
+            
+            if (ShowViewCube)
+                DrawViewCube(new Vector2(pos.X + size.X - 100, pos.Y + 25));
 
             if (ShowDebugInfo)
                 DrawDebugOverlay();
 
             DrawTransform();
+        }
 
-            var pos = ImGui.GetWindowPos();
-            //var size = ImGui.GetWindowSize();
-            //DrawViewCube(new Vector2(pos.X + size.X - 100, pos.Y + 25));
-            //DrawTransformSettings(new Vector2(size.X - (150 + 165), 40));
-            //DrawFps(new Vector2(size.X - (150), 75));
+        private void DrawToolbar()
+        {
+            var cursorPos = ImGui.GetCursorPos();
+            var size      = ImGui.GetContentRegionAvail();
+            var pos       = cursorPos + new Vector2(size.X - 320, -10);
 
-            ImGui.Text($"Actors: {RenderStats.NumActors}, Rendered: {RenderStats.NumRenderedActors}");
+            ImGui.SetCursorPos(pos);
+            ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 5);
+            DrawTransformOpSelector(ImGuizmoOperation.Translate, "", "Translate");
+            UIMergeButton();
+            DrawTransformOpSelector(ImGuizmoOperation.Rotate, "", "Rotate");
+            UIMergeButton();
+            DrawTransformOpSelector(ImGuizmoOperation.Scale, "", "Scale");
+            ImGui.PopStyleVar();
+            
+            ImGui.SameLine();
+            ImGui.Dummy(new Vector2(5, 0));
+            ImGui.SameLine();
+            
+            // Mode
+            DrawTransformModeSelector();
+            ImGui.SameLine();
+            
+            // Snapping
+            DrawSnapSettings();
+            
+            ImGui.SetCursorPos(cursorPos);
         }
 
         private void DrawTransform()
@@ -170,66 +205,49 @@ namespace Substrate.Widgets
                 WorldScene.DrawTransform(TransformOperation, TransformMode, ref TransformSnap);
             }
         }
-
-        private void DrawTransformSettings(Vector2 pos)
-        {
-            /*
-            var ogPos = ImGui.GetCursorPos();
-            ImGui.SetCursorPos(pos);
-
-            // Operation
-            DrawTransformOpSelector(OPERATION.TRANSLATE, "", "Translate");
-            UIMergeButton();
-            DrawTransformOpSelector(OPERATION.ROTATE, "", "Rotate");
-            UIMergeButton();
-            DrawTransformOpSelector(OPERATION.SCALE, "", "Scale");
-
-            // Mode
-            //DrawTransformModeSelector();
-
-            // Snapping
-            DrawSnapSettings();
-
-            ImGui.SetCursorPos(ogPos);
-            */
-        }
-
-        /*
+        
         private void DrawTransformModeSelector()
         {
             ImGui.PushID("Mode");
-            var modeIcon = TransformMode == MODE.WORLD ? "" : "";
-            var modeTxt = TransformMode == MODE.WORLD ? "" : " L ";
-            var modeToolTip = TransformMode == MODE.WORLD ? "World" : "Local";
-            if (Widgets.IconButton(modeIcon, modeTxt))
-                TransformMode = TransformMode == MODE.WORLD ? MODE.LOCAL : MODE.WORLD;
+            var modeIcon    = TransformMode == ImGuizmoMode.World ? "" : "L";
+            var modeTxt     = TransformMode == ImGuizmoMode.World ? " W " : " L ";
+            var modeToolTip = TransformMode == ImGuizmoMode.World ? "World" : "Local";
+            if (ImguiEx.IconButton(modeIcon))
+                TransformMode = TransformMode == ImGuizmoMode.World ? ImGuizmoMode.Local : ImGuizmoMode.World;
+
+            if (TransformMode == ImGuizmoMode.World) {
+                ImGui.Dummy(new Vector2(2, 0));
+            }
 
             if (ImGui.IsItemHovered())
                 ImGui.SetTooltip(modeToolTip);
+            
+            ImGui.PopID();
         }
-        */
 
         private static void UIMergeButton()
         {
             ImGui.SameLine();
-            ImGui.Dummy(new Vector2(-12, 0));
+            ImGui.Dummy(new Vector2(-10, 0));
             ImGui.SameLine();
         }
 
-        /*private void DrawTransformOpSelector(OPERATION op, string iconStr, string name)
+        private void DrawTransformOpSelector(ImGuizmoOperation op, string iconStr, string name)
         {
             ImGui.PushID(name);
-            if (Widgets.IconButton(iconStr, bgColor: (TransformOperation & op) != 0 ? ImToolColors.HexSelectedUnderline : null))
+            if (ImguiEx.IconButton(iconStr, bgColor: (TransformOperation & op) != 0 ? Substrate.Theme.Warning.Primary : null))
                 TransformOperation ^= op;
 
             if (ImGui.IsItemHovered())
                 ImGui.SetTooltip(name);
-        }*/
+            
+            ImGui.PopID();
+        }
 
         private void DrawSnapSettings()
         {
             bool updateSnaps = false;
-            /*if (Widgets.IconButton("", bgColor: TransformSnap != null ? ImToolColors.HexSelectedUnderline : null))
+            if (ImguiEx.IconButton("", bgColor: TransformSnap != null ? Substrate.Theme.Warning.Primary : null))
             {
                 if (TransformSnap == null)
                 {
@@ -239,7 +257,7 @@ namespace Substrate.Widgets
                 {
                     TransformSnap = null;
                 }
-            }*/
+            }
 
             if (ImGui.IsItemHovered())
                 ImGui.SetTooltip("Grid Snapping");
@@ -264,7 +282,7 @@ namespace Substrate.Widgets
             var view2 = viewM.ToFloatArrray();
             Camera.Transform.Position = pos;
 
-            //ImGuizmo.ViewManipulate(ref view2[0], 1f, cubePos, new Vector2(100, 100), 1);
+            ImGuizmo.ViewManipulate(ref view2[0], 1f, cubePos, new Vector2(100, 100), 1);
 
             if (ImGui.IsWindowFocused())
             {

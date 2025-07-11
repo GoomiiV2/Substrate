@@ -20,8 +20,9 @@ namespace Substrate
 
             Substrate.App.GD.WaitForIdle();
 
-            SceneTex        = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R16_G16_B16_A16_UNorm, TextureUsage.RenderTarget | TextureUsage.Sampled));
-            DepthTex        = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R32_Float, TextureUsage.DepthStencil             | TextureUsage.RenderTarget | TextureUsage.Sampled));
+            var msaaSamples = (TextureSampleCount)(Substrate.Config.Rendering.MSAA - 1);
+            SceneTex        = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R16_G16_B16_A16_UNorm, TextureUsage.RenderTarget | TextureUsage.Sampled, msaaSamples));
+            DepthTex        = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R32_Float, TextureUsage.DepthStencil             | TextureUsage.RenderTarget | TextureUsage.Sampled, msaaSamples));
             ActorIdTex      = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R32_UInt, TextureUsage.RenderTarget              | TextureUsage.Sampled));
             SelectedMaskTex = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R8_UInt, TextureUsage.RenderTarget               | TextureUsage.Sampled));
 

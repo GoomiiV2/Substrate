@@ -23,9 +23,10 @@ namespace Substrate
             FrameBuffer?.Dispose();
 
             Substrate.App.GD.WaitForIdle();
-
-            SceneTex = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R16_G16_B16_A16_Float, TextureUsage.RenderTarget | TextureUsage.Sampled, TextureSampleCount.Count8));
-            DepthTex = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R32_Float, TextureUsage.DepthStencil));
+            
+            var msaaSamples = (TextureSampleCount)(Substrate.Config.Rendering.MSAA - 1);
+            SceneTex = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R16_G16_B16_A16_Float, TextureUsage.RenderTarget | TextureUsage.Sampled, msaaSamples));
+            DepthTex = Substrate.App.GD.ResourceFactory.CreateTexture(TextureDescription.Texture2D(width, height, 1, 1, PixelFormat.R32_Float, TextureUsage.DepthStencil, msaaSamples));
 
             FrameBuffer = Substrate.App.GD.ResourceFactory.CreateFramebuffer(new FramebufferDescription()
             {

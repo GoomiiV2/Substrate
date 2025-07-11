@@ -31,6 +31,7 @@ namespace Substrate
         public bool VSync                = true;
         public bool DebugRenderingDevice = true;
         [JsonConverter(typeof(StringEnumConverter))]
-        public GraphicsBackend GfxAPI    = GraphicsBackend.Direct3D11;
+        public GraphicsBackend GfxAPI    = GraphicsBackend.Vulkan;
+        public MSAASamples MSAA          = MSAASamples.MSAA_1X;
     }
 }

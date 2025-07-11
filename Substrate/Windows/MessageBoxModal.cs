@@ -27,7 +27,7 @@ namespace Substrate
             {
                 ImGui.TextWrapped(Message);
 
-                if (ImguiEx.ButtonInfo("Ok", new Vector2(-1f, 0f)))
+                if (ImguiEx.ButtonInfo("Ok"u8, new Vector2(-1f, 0f)))
                     Remove();
             }
             ImGui.EndPopup();

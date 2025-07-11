@@ -63,13 +63,13 @@ namespace Substrate.Test
 
         private void DrawButtons(float dt)
         {
-            ImguiEx.ButtonInfo("Info");
+            ImguiEx.ButtonInfo("Info"u8);
             ImGui.SameLine();
-            ImguiEx.ButtonSuccess("Success");
+            ImguiEx.ButtonSuccess("Success"u8);
             ImGui.SameLine();
-            ImguiEx.ButtonWarn("Warn");
+            ImguiEx.ButtonWarn("Warn"u8);
             ImGui.SameLine();
-            ImguiEx.ButtonError("Error");
+            ImguiEx.ButtonError("Error"u8);
 
             if (ImGui.Button("Show Message box"))
                 Substrate.Modals.ShowMessageBox("Test Message Box", "<3");
