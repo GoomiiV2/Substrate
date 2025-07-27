@@ -143,7 +143,7 @@ namespace Substrate.Widgets
 
                 // Draw the entries
                 if (ImGui.BeginTable("Dir Entries", 3,
-                    ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.Sortable | ImGuiTableFlags.ScrollY, new Vector2(0, TopPanelHeight)))
+                    ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.Sortable | ImGuiTableFlags.ScrollY | ImGuiTableFlags.SizingStretchSame, new Vector2(0, TopPanelHeight)))
                 {
                     // freeze header row
                     ImGui.TableSetupScrollFreeze(0, 1);
@@ -170,7 +170,9 @@ namespace Substrate.Widgets
                         if (ImGui.Selectable($"##SelectEntry_{entry.Name}_{entryIdx}", entry.IsSelected,
                             ImGuiSelectableFlags.SpanAllColumns | ImGuiSelectableFlags.AllowDoubleClick | ImGuiSelectableFlags.NoAutoClosePopups))
                         {
-                            if (HandleSelection(entry)) return;
+                            if (HandleSelection(entry)) {
+                                break;
+                            }
                         }
 
                         ImGui.SameLine();
@@ -217,6 +219,7 @@ namespace Substrate.Widgets
                     }
                     ImGui.EndTable();
                 }
+                
                 DrawBottomBar();
 
                 if (PromptOverwriteFilePopup)
@@ -483,8 +486,8 @@ namespace Substrate.Widgets
                         ImGui.SameLine(32f);
                         ImGui.Text(entry.Name);
                     }
-                    ImGui.EndTable();
                 }
+                ImGui.EndTable();
                 ImGui.EndChild();
             }
         }
