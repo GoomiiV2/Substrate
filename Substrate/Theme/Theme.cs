@@ -26,10 +26,12 @@ namespace Substrate
         public string Font = FontManager.Regular;
         public Dictionary<ThemeColors, ThemeColor> Colors = new Dictionary<ThemeColors, ThemeColor>();
 
-        [JsonIgnore] public ThemeColor Info    => Colors[ThemeColors.Info] ?? new ThemeColor();
-        [JsonIgnore] public ThemeColor Success => Colors[ThemeColors.Success] ?? new ThemeColor();
-        [JsonIgnore] public ThemeColor Warning => Colors[ThemeColors.Warning] ?? new ThemeColor();
-        [JsonIgnore] public ThemeColor Error   => Colors[ThemeColors.Error] ?? new ThemeColor();
+        [JsonIgnore] public ThemeColor Info                 => Colors[ThemeColors.Info]                                            ?? new ThemeColor();
+        [JsonIgnore] public ThemeColor Success              => Colors[ThemeColors.Success]                                         ?? new ThemeColor();
+        [JsonIgnore] public ThemeColor Warning              => Colors[ThemeColors.Warning]                                         ?? new ThemeColor();
+        [JsonIgnore] public ThemeColor Error                => Colors[ThemeColors.Error]                                           ?? new ThemeColor();
+        [JsonIgnore] public ThemeColor HexSelectedUnderline => Colors.TryGetValue(ThemeColors.HexSelectedUnderline, out var color) ? color : new ThemeColor(new Vector4(0.52941f, 0.80784f, 0.92157f, 1.0f));
+        [JsonIgnore] public ThemeColor HexHovered           => Colors.TryGetValue(ThemeColors.HexHovered, out var color) ? color : new ThemeColor(new Vector4(1.0f, 0.27059f, 0.0f, 1.0f));
 
         public static Theme Load(string path)
         {

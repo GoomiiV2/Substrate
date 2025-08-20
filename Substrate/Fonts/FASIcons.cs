@@ -136,5 +136,11 @@ namespace Substrate
         public static char TurnDown = '\u2935'; // 2935, F3BE
         public static char TurnUp = '\u2934'; // 2934, F3BF
         public static char Wrench = '\uF0AD'; // F0AD, 01F527
+        public static char Circle = '\uf111';           // Solid circle
+        public static char Globe = '\uf0ac';            // Globe icon
+        public static char Comments = '\uf086';         // Chat bubbles
+        public static char Users = '\uf0c0';            // Group of users
+        public static char QuestionCircle = '\uf059';   // Question mark in circle
+
     }
 }

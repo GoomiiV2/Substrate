@@ -12,5 +12,7 @@ namespace Substrate
         Success,
         Warning,
         Error,
+        HexSelectedUnderline,
+        HexHovered
     }
 }
